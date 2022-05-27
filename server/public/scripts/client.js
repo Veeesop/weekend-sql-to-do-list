@@ -2,9 +2,30 @@ console.log("client connected");
 
 $(document).ready(function () {
   console.log("ready!");
+  $("#submitBtn").on("click", addTask);
   $(document).on("click", ".deleteBtn", deleteTodo);
   getTodos();
 });
+
+//function to add task
+function addTask() {
+  let newTask = $("#input").val();
+  let data = {
+    task: newTask,
+  };
+  $.ajax({
+    type: "POST",
+    url: "/todo",
+    data: data,
+  })
+    .then(() => {
+      console.log("new task success");
+      getTodos();
+    })
+    .catch((err) => {
+      console.log("Fer cryin out loud...", err);
+    });
+}
 
 //function to display all todos and delete button
 function display(response) {
