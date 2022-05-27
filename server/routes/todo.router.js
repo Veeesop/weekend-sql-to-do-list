@@ -2,6 +2,26 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../modules/pool");
 
+//post router
+router.post("/", (req, res) => {
+  console.log(req.body);
+  const sqlQuery = `
+    INSERT INTO "todos" (task)
+    VALUES ($1);
+    `;
+  const sqlParams = [req.body.task];
+  pool
+    .query(sqlQuery, sqlParams)
+    .then(() => {
+      console.log("put success");
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("Dummy...", err);
+      res.sendStatus(500);
+    });
+});
+
 //get router
 router.get("/", (req, res) => {
   const sqlQuery = `
