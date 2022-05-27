@@ -2,6 +2,7 @@ console.log("client connected");
 
 $(document).ready(function () {
   console.log("ready!");
+  getTodos();
 });
 
 //function to get all todos
