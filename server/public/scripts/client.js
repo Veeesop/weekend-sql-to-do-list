@@ -40,7 +40,8 @@ function deleteTodo() {
   let id = $(this).parents("div").data("id");
   $.ajax({
     method: "DELETE",
-    url: "/todo",
+    url: `/todo/${id}`,
+    data: id,
   }).then(() => {
     console.log("Deleted");
     getTodos();

@@ -17,6 +17,21 @@ router.get("/", (req, res) => {
       console.log("Shit..", err);
     });
 });
-//post router
+//delete router
+router.delete("/:id", (req, res) => {
+  const sqlQuery = `
+    DELETE FROM "todos"
+    WHERE id = $1;
+    `;
+  const sqlParams = [req.params.id];
+  pool
+    .query(sqlQuery, sqlParams)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("Bullock...", err);
+    });
+});
 
 module.exports = router;
