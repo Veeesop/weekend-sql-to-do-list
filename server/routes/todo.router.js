@@ -2,6 +2,24 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../modules/pool");
 
+//post router
+router.post("/", (req, res) => {
+  const sqlQuery = `
+    INSERT INTO "todos"
+    VALUES ( $1 )
+    `;
+  const sqlParams = [req.body.task];
+  pool
+    .query(sqlQuery, sqlParams)
+    .then((dbRes) => {
+      console.log(dbRes.rows);
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log("Dummy...", err);
+    });
+});
+
 //get router
 router.get("/", (req, res) => {
   const sqlQuery = `
