@@ -2,6 +2,7 @@ console.log("client connected");
 
 $(document).ready(function () {
   console.log("ready!");
+  $(document).on("click", ".deleteBtn", deleteTodo);
   getTodos();
 });
 
@@ -37,6 +38,13 @@ function getTodos() {
 //function to delete
 function deleteTodo() {
   let id = $(this).parents("div").data("id");
+  $.ajax({
+    method: "DELETE",
+    url: "/todo",
+  }).then(() => {
+    console.log("Deleted");
+    getTodos();
+  });
 }
 
 //function to check off
