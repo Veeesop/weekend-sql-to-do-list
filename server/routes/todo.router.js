@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
 //get router
 router.get("/", (req, res) => {
   const sqlQuery = `
-    SELECT * FROM todos
+    SELECT * FROM todos ORDER BY id
     `;
   pool
     .query(sqlQuery)
@@ -51,6 +51,28 @@ router.delete("/:id", (req, res) => {
     })
     .catch((err) => {
       console.log("Bullock...", err);
+    });
+});
+
+//Put router
+router.put("/:id", (req, res) => {
+  let id = req.params.id;
+  let complete = req.body.complete;
+  const sqlQuery = `
+    UPDATE "todos"
+    SET "complete" = $1
+    WHERE id = $2;
+  `;
+  const sqlParams = [complete, id];
+
+  pool
+    .query(sqlQuery, sqlParams)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("Idiot...", err);
+      res.sendStatus(500);
     });
 });
 
